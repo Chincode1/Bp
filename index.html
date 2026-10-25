@@ -9,7 +9,7 @@
 :root{--bg:#fdfcf9;--tx:#111;--mu:#7a7a7a;--bd:#e6e2da;--or:#f09c38;--bl:#66d4fa;--cd:#fff;box-sizing:border-box}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14120f;--tx:#f3efe8;--mu:#a8a39a;--bd:#2c2822;--cd:#1d1a16}}
 *{box-sizing:border-box}html,body{margin:0}
-body{background:var(--bg);color:var(--tx);font:400 15px/1.6 Prompt,system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--tx);font:400 15px/1.6 Prompt,system-ui,sans-serif}
 a{color:inherit;text-decoration:none}img{max-width:100%}
 #sp{position:fixed;inset:0;z-index:200;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .6s}
 #sp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46vh;background:radial-gradient(circle,#fff 40%,transparent 42%) 0 0/20px 20px,linear-gradient(#fff0,var(--or));-webkit-mask-image:linear-gradient(transparent,#000 70%);mask-image:linear-gradient(transparent,#000 70%);pointer-events:none}
@@ -21,8 +21,13 @@ a{color:inherit;text-decoration:none}img{max-width:100%}
 .bar i{display:block;height:100%;width:0;background:var(--or);border-radius:5px}
 .n1{font-size:26px;font-weight:600}.n1 b{color:var(--or);font-weight:600}
 .n2{font-size:12px;font-weight:600;letter-spacing:.32em;color:var(--mu)}
-header{display:flex;align-items:center;gap:14px;padding:12px 18px;background:var(--bg);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:50}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+header{display:flex;align-items:center;gap:14px;padding:12px 18px 12px;padding-top:calc(12px + env(safe-area-inset-top,0px));background:var(--bg);border-bottom:1px solid var(--bd);position:fixed;top:0;left:0;right:0;z-index:50}
+#app{padding-top:calc(71px + env(safe-area-inset-top,0px))}
+.ql{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px}.ql a{border:1px solid var(--bd);border-radius:16px;padding:12px;text-align:center;font-weight:500}
+.nw a{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd)}.nw b{color:var(--or);white-space:nowrap;font-weight:500}
+.ex{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;text-align:center;margin-top:10px}.ex img{width:96px;height:96px;border-radius:50%;object-fit:cover;background:var(--bd)}.ex b{display:block;font-weight:500}.ex small{color:var(--mu)}
+.ac{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}.ac img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:18px;background:var(--bd)}.ac small{color:var(--mu)}
+footer{padding:22px 20px calc(30px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--mu);font-size:13px;white-space:pre-line;border-top:1px solid var(--bd)}
 header .lg{width:46px;height:46px;object-fit:contain}
 header .sep{width:4px;height:44px;background:#ccc;border-radius:2px}
 header .n1{font-size:20px;line-height:1.2}header .n2{font-size:10px}
@@ -79,7 +84,13 @@ var DEF={name1:'โรงเรียน',name2:'บ้านเป้าวิ�
 c1:{t:'ข่าวประกาศ',u:'page:news',img:'',col:'#66d4fa'},c2:{t:'ตารางเรียน',u:'#',img:'',col:'#f09c38'},
 menu:'หน้าแรก | #\nเกี่ยวกับโรงเรียน\n- ประวัติโรงเรียน | page:history\n- วิสัยทัศน์และพันธกิจ | page:vision\n- สัญลักษณ์ประจำโรงเรียน | #\n- ระเบียบการแต่งกาย | #\n- หลักสูตรของโรงเรียน | #\n- ติดต่อเรา | page:contact\nตารางเรียน/ตารางสอน | #\nปฏิทินวิชาการ | #\nกิจกรรมชุมนุม | #\nดูผลการเรียน/SGS | https://sgs.bopp-obec.info/\nข่าวประกาศ | page:news\nกลุ่มบริหาร | #',
 pages:[{id:'history',t:'ประวัติโรงเรียน',body:'เขียนประวัติโรงเรียนที่นี่',img:''},{id:'vision',t:'วิสัยทัศน์และพันธกิจ',body:'เขียนวิสัยทัศน์ที่นี่',img:''},{id:'news',t:'ข่าวประกาศ',body:'ยังไม่มีประกาศ',img:''},{id:'contact',t:'ติดต่อเรา',body:'ที่อยู่และเบอร์โทรของโรงเรียน',img:''}],
-blocks:[{k:'h',v:'ยินดีต้อนรับสู่โรงเรียนบ้านเป้าวิทยา'},{k:'p',v:'เพิ่มข้อความ รูปภาพ หรือวิดีโอตรงนี้ได้จากเมนูแอดมิน'}],ph:''};
+blocks:[{k:'h',v:'ยินดีต้อนรับสู่โรงเรียนบ้านเป้าวิทยา'},{k:'p',v:'เพิ่มข้อความ รูปภาพ หรือวิดีโอตรงนี้ได้จากเมนูแอดมิน'}],ph:'',colBg:'#fdfcf9',
+links:[{t:'ตารางเรียน/ตารางสอน',u:'#'},{t:'ปฏิทินวิชาการ',u:'#'},{t:'ดูผลการเรียน/SGS',u:'https://sgs.bopp-obec.info/'},{t:'กิจกรรมชุมนุม',u:'#'}],
+news:[{d:'19 มิ.ย.',t:'ประกาศข่าวสารล่าสุดจากโรงเรียน',u:'#'}],
+execs:[{img:'',n:'ชื่อ นามสกุล',r:'ผู้อำนวยการโรงเรียน'}],
+acts:[{img:'',d:'',t:'ภาพกิจกรรมล่าสุด'}],
+ft:{addr:'ที่อยู่โรงเรียน',tel:'โทร 000-000-0000',mail:'',fb:''},
+show:{links:1,execs:1,news:1,acts:1,ft:1}};
 var S=JSON.parse(JSON.stringify(DEF)),me=false,tab='gen';
 function E(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function toast(m){var t=$('ts');t.textContent=m;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(function(){t.style.display='none'},3200)}
@@ -104,10 +115,16 @@ function blk(b){var w=b.w?' style="width:'+b.w+'%;margin:0 '+(b.al=='c'?'auto':b
  if(b.k=='i')return '<div class="blk"><img data-m="'+E(b.v)+'" alt=""'+w+'></div>';if(b.k=='v'&&b.v)return '<div class="blk"'+(b.w?' style="width:'+b.w+'%"':'')+'>'+vid(b.v)+'</div>';
  if(b.k=='l')return '<div class="blk"><a class="btn" href="'+E(b.u)+'">'+E(b.v)+'</a></div>';return''}
 function paint(){
- var r=document.documentElement.style;r.setProperty('--or',S.colOr);r.setProperty('--bl',S.colBl);document.title=S.name1+S.name2;
+ var r=document.documentElement.style;r.setProperty('--or',S.colOr);r.setProperty('--bl',S.colBl);if(S.colBg&&S.colBg!='#fdfcf9')r.setProperty('--bg',S.colBg);document.title=S.name1+S.name2;
  var cd=function(c,i){return '<a class="card" data-go="'+E(c.u)+'" data-m="'+E(c.img)+'" style="background-color:'+E(c.col)+'">'+E(c.t)+'</a>'};
- $('app').innerHTML='<header><img class="lg" data-m="'+E(S.logo)+'" alt=""><div class="sep"></div><div>'+nm()+'</div><button id="mb" onclick="dr(1)" aria-label="เมนู"><i></i><i></i><i></i></button></header><div class="hero" data-m="'+E(S.hero)+'"></div><div class="sheet"><div class="n2">'+E(S.en)+'</div><div class="cards">'+cd(S.c1)+cd(S.c2)+'</div>'+S.blocks.map(blk).join('')+'</div>';
+ $('app').innerHTML='<header><img class="lg" data-m="'+E(S.logo)+'" alt=""><div class="sep"></div><div>'+nm()+'</div><button id="mb" onclick="dr(1)" aria-label="เมนู"><i></i><i></i><i></i></button></header><div class="hero" data-m="'+E(S.hero)+'"></div><div class="sheet"><div class="n2">'+E(S.en)+'</div><div class="cards">'+cd(S.c1)+cd(S.c2)+'</div>'+secs()+'</div>'+foot();
  menu();fill();document.querySelectorAll('[data-go]').forEach(function(a){a.onclick=function(e){e.preventDefault();go(a.dataset.go)}})}
+function sh(k,h,b){return S.show[k]?'<div class="blk"><h2>'+h+'</h2>'+b+'</div>':''}
+function secs(){return sh('links','ลิงก์ด่วน','<div class="ql">'+S.links.map(function(l){return '<a href="#" data-go="'+E(l.u)+'">'+E(l.t)+'</a>'}).join('')+'</div>')+S.blocks.map(blk).join('')
++sh('news','ข่าวประกาศ','<div class="nw">'+S.news.map(function(n){return '<a href="#" data-go="'+E(n.u)+'"><b>'+E(n.d)+'</b><span>'+E(n.t)+'</span></a>'}).join('')+'</div>')
++sh('execs','คณะผู้บริหาร','<div class="ex">'+S.execs.map(function(e){return '<div><img data-m="'+E(e.img)+'" alt=""><b>'+E(e.n)+'</b><small>'+E(e.r)+'</small></div>'}).join('')+'</div>')
++sh('acts','ภาพกิจกรรม','<div class="ac">'+S.acts.map(function(a){return '<div><img data-m="'+E(a.img)+'" alt=""><b>'+E(a.t)+'</b><br><small>'+E(a.d)+'</small></div>'}).join('')+'</div>')}
+function foot(){var f=S.ft;return S.show.ft?'<footer>'+E([S.name1+S.name2,f.addr,f.tel,f.mail].filter(Boolean).join('\n'))+(f.fb?'\n<a href="'+E(f.fb)+'" target="_blank" style="color:var(--or)">Facebook</a>':'')+'</footer>':''}
 function menu(){var h='<button class="x" onclick="dr(0)">×</button><div style="font-weight:600;margin-bottom:14px">เมนู</div>',o=null,kids='';
  function flush(){if(o){h+=kids?'<details><summary>'+E(o[0])+'</summary>'+kids+'</details>':'<a href="#" data-go="'+E(o[1])+'">'+E(o[0])+'</a>';o=null;kids=''}}
  S.menu.split('\n').forEach(function(l){l=l.trim();if(!l)return;var sub=l[0]=='-';if(sub)l=l.slice(1);var p=l.split('|'),t=p[0].trim(),u=(p[1]||'#').trim();
@@ -126,34 +143,43 @@ async function splash(){var sp=$('sp');if(S.splashOnce&&sessionStorage.getItem('
 async function adminOpen(){dr(0);if(me)return adm(1);$('lg').classList.add('on');$('pw').value='';$('er').textContent='';setTimeout(function(){$('pw').focus()},50)}
 async function login(){var h=await sha($('pw').value),ok=S.ph?h==S.ph:$('pw').value=='admin1234';if(ok){me=true;$('lg').classList.remove('on');adm(1)}else $('er').textContent='รหัสผ่านไม่ถูกต้อง'}
 $('pw').onkeydown=function(e){if(e.key=='Enter')login()};
-function adm(on){$('ad').classList.toggle('on',!!on);if(on){$('md').textContent=mode=='cloud'?'☁️ ฐานข้อมูล':'💾 ในเครื่อง';tabs();body()}}
-var TB=[['gen','ทั่วไป'],['home','หน้าแรก'],['blk','เนื้อหา'],['menu','เมนู'],['pgs','หน้าย่อย'],['sec','รหัสผ่าน']];
-function tabs(){$('tabs').innerHTML=TB.map(function(t){return '<button class="b s m'+(t[0]==tab?' on':'')+'" onclick="tab=\''+t[0]+'\';tabs();body()">'+t[1]+'</button>'}).join('')}
+function adm(on){$('ad').classList.toggle('on',!!on);if(on){$('md').textContent=mode=='cloud'?'☁️ ฐานข้อมูล':'💾 ในเครื่อง';tabs();rb()}}
+var TB=[['gen','ทั่วไป'],['home','การ์ด'],['blk','เนื้อหา'],['links','ลิงก์ด่วน'],['news','ข่าว'],['execs','ผู้บริหาร'],['acts','กิจกรรม'],['ft','ท้ายเว็บ'],['show','แสดง/ซ่อน'],['menu','เมนู'],['pgs','หน้าย่อย'],['sec','ระบบ']];
+function tabs(){$('tabs').innerHTML=TB.map(function(t){return '<button class="b s m'+(t[0]==tab?' on':'')+'" onclick="tab=\''+t[0]+'\';tabs();rb()">'+t[1]+'</button>'}).join('')}
 function inp(l,o,k,t){return '<label>'+l+'</label><input '+(t||'')+' value="'+E(o[k])+'" oninput="this._o[\''+k+'\']=this.type==\'number\'?+this.value:this.value">'}
 function bindAll(root,pairs){root.querySelectorAll('[data-b]').forEach(function(e){e._o=pairs[e.dataset.b]})}
 var REG=[];
 function F(l,o,k,t){var n=REG.push(o)-1;return '<label>'+l+'</label><input '+(t||'')+' data-b="'+n+'" data-k="'+k+'" value="'+E(o[k])+'">'}
 function T(l,o,k,rows){var n=REG.push(o)-1;return '<label>'+l+'</label><textarea rows="'+(rows||3)+'" data-b="'+n+'" data-k="'+k+'">'+E(o[k])+'</textarea>'}
 function IM(l,o,k,mx,rm){var n=REG.push(o)-1;return '<label>'+l+'</label><div data-pv="'+n+'|'+k+'"></div><input type="file" accept="image/*" data-im="'+n+'|'+k+'|'+(mx||900)+'"><div class="row">'+(rm?'<label style="margin:0"><input type="checkbox" data-rmc> ลบพื้นหลัง</label><input type="range" min="20" max="140" value="60" data-rms title="ความไว" style="flex:1">':'')+'<button class="b d m" data-clr="'+n+'|'+k+'">ลบรูป</button></div>'}
-function body(){REG=[];var h='',B=S.blocks;
- if(tab=='gen')h='<h3>ชื่อและโลโก้</h3>'+F('คำหน้าชื่อ (สีดำ)',S,'name1')+F('ชื่อโรงเรียน (สีส้ม)',S,'name2')+F('ชื่ออังกฤษ',S,'en')+IM('โลโก้',S,'logo',500,1)+IM('รูปปกหน้าแรก',S,'hero',1200)+'<h3>สี</h3><div class="row"><div>'+F('สีส้ม',S,'colOr','type=color')+'</div><div>'+F('สีฟ้า',S,'colBl','type=color')+'</div></div><h3>หน้าเปิด</h3>'+F('เวลาแถบโหลด (มิลลิวินาที)',S,'splashMs','type=number')+'<label><input type="checkbox" '+(S.splashOnce?'checked':'')+' onchange="S.splashOnce=this.checked?1:0"> แสดงครั้งเดียวต่อการเข้าเว็บ</label>';
+function rb(){REG=[];var h='',B=S.blocks;
+ if(tab=='gen')h='<h3>ชื่อและโลโก้</h3>'+F('คำหน้าชื่อ (สีดำ)',S,'name1')+F('ชื่อโรงเรียน (สีส้ม)',S,'name2')+F('ชื่ออังกฤษ',S,'en')+IM('โลโก้',S,'logo',500,1)+IM('รูปปกหน้าแรก',S,'hero',1200)+'<h3>สี</h3><div class="row"><div>'+F('สีส้ม',S,'colOr','type=color')+'</div><div>'+F('สีฟ้า',S,'colBl','type=color')+'</div><div>'+F('สีพื้นเว็บ',S,'colBg','type=color')+'</div></div><h3>หน้าเปิด</h3>'+F('เวลาแถบโหลด (มิลลิวินาที)',S,'splashMs','type=number')+'<label><input type="checkbox" '+(S.splashOnce?'checked':'')+' onchange="S.splashOnce=this.checked?1:0"> แสดงครั้งเดียวต่อการเข้าเว็บ</label>';
  if(tab=='home')h=[S.c1,S.c2].map(function(c,i){return '<div class="it"><b>การ์ด '+(i+1)+'</b>'+F('ข้อความ',c,'t')+F('ลิงก์ (URL หรือ page:รหัสหน้า)',c,'u')+F('สีพื้น',c,'col','type=color')+IM('รูปพื้นการ์ด (ถ้ามี)',c,'img',800)+'</div>'}).join('');
  if(tab=='blk'){h='<div class="row"><button class="b o m" onclick="ab(\'h\')">+ หัวข้อ</button><button class="b o m" onclick="ab(\'p\')">+ ข้อความ</button><button class="b o m" onclick="ab(\'i\')">+ รูป</button><button class="b o m" onclick="ab(\'v\')">+ วิดีโอ</button><button class="b o m" onclick="ab(\'l\')">+ ปุ่มลิงก์</button></div><div class="hint">เรียงจากบนลงล่างต่อจากการ์ด รูปที่ลบพื้นหลังจะเป็น PNG โปร่งใส</div>'+
   B.map(function(b,i){var x='<div class="it"><div class="row"><b style="flex:1">'+{h:'หัวข้อ',p:'ข้อความ',i:'รูปภาพ',v:'วิดีโอ',l:'ปุ่มลิงก์'}[b.k]+'</b><button class="b s m" onclick="mb('+i+',-1)">↑</button><button class="b s m" onclick="mb('+i+',1)">↓</button><button class="b d m" onclick="mb('+i+',0)">ลบ</button></div>';
    if(b.k=='h')x+=F('ข้อความ',b,'v');if(b.k=='p')x+=T('ข้อความ',b,'v',4);if(b.k=='i')x+=IM('รูป',b,'v',900,1)+F('ความกว้าง % (เว้นว่าง=เต็ม)',b,'w','type=number')+'<label>ตำแหน่ง</label><select onchange="S.blocks['+i+'].al=this.value"><option value="l"'+(b.al=='l'?' selected':'')+'>ซ้าย</option><option value="c"'+(b.al!='l'&&b.al!='r'?' selected':'')+'>กลาง</option><option value="r"'+(b.al=='r'?' selected':'')+'>ขวา</option></select>';
    if(b.k=='v')x+=F('ลิงก์ YouTube หรือไฟล์ .mp4/.webm',b,'v')+F('ความกว้าง %',b,'w','type=number');if(b.k=='l')x+=F('ข้อความปุ่ม',b,'v')+F('ลิงก์',b,'u');return x+'</div>'}).join('')}
  if(tab=='menu')h='<div class="hint">1 บรรทัด = 1 เมนู รูปแบบ ข้อความ | ลิงก์<br>ขึ้นต้นด้วย - คือเมนูย่อยของบรรทัดบน<br>ลิงก์ใช้ URL เต็ม หรือ page:รหัสหน้า (ดูแท็บหน้าย่อย)</div>'+T('เมนูสามขีด',S,'menu',16);
- if(tab=='pgs')h='<div class="row"><button class="b o m" onclick="S.pages.push({id:\'p\'+Date.now().toString(36),t:\'หน้าใหม่\',body:\'\',img:\'\'});body()">+ เพิ่มหน้า</button></div>'+S.pages.map(function(p,i){return '<div class="it"><div class="row"><b style="flex:1">รหัส: '+E(p.id)+'</b><button class="b d m" onclick="if(confirm(\'ลบหน้านี้?\')){S.pages.splice('+i+',1);body()}">ลบ</button></div>'+F('ชื่อหน้า',p,'t')+T('เนื้อหา',p,'body',5)+IM('รูปประกอบ',p,'img',900)+'</div>'}).join('');
- if(tab=='sec')h='<label>ตั้งรหัสผ่านใหม่ (6 ตัวขึ้นไป)</label><input type="password" id="np"><div class="row"><button class="b o" onclick="setpw()">เปลี่ยนรหัสผ่าน</button></div><div class="hint">รหัสเริ่มต้นคือ admin1234 · กดบันทึกด้านบนเพื่อยืนยัน</div><h3>นำเข้า/ส่งออก</h3><div class="row"><button class="b s" onclick="expo()">ส่งออก JSON</button><button class="b d" onclick="if(confirm(\'คืนค่าเริ่มต้น?\')){S=JSON.parse(JSON.stringify(DEF));body()}">คืนค่าเริ่มต้น</button></div>';
+ if(tab=='pgs')h='<div class="row"><button class="b o m" onclick="S.pages.push({id:\'p\'+Date.now().toString(36),t:\'หน้าใหม่\',body:\'\',img:\'\'});rb()">+ เพิ่มหน้า</button></div>'+S.pages.map(function(p,i){return '<div class="it"><div class="row"><b style="flex:1">รหัส: '+E(p.id)+'</b><button class="b d m" onclick="if(confirm(\'ลบหน้านี้?\')){S.pages.splice('+i+',1);rb()}">ลบ</button></div>'+F('ชื่อหน้า',p,'t')+T('เนื้อหา',p,'body',5)+IM('รูปประกอบ',p,'img',900)+'</div>'}).join('');
+ if(tab=='sec')h='<label>ตั้งรหัสผ่านใหม่ (6 ตัวขึ้นไป)</label><input type="password" id="np"><div class="row"><button class="b o" onclick="setpw()">เปลี่ยนรหัสผ่าน</button></div><div class="hint">รหัสเริ่มต้นคือ admin1234 · กดบันทึกด้านบนเพื่อยืนยัน</div><h3>นำเข้า/ส่งออก</h3><div class="row"><button class="b s" onclick="expo()">ส่งออก JSON</button><input type="file" accept=".json" onchange="imp(this)"><button class="b d" onclick="if(confirm(\'คืนค่าเริ่มต้น?\')){S=JSON.parse(JSON.stringify(DEF));rb()}">คืนค่าเริ่มต้น</button></div>';
+ if(tab=='links')h=LST('links','ลิงก์',[['t','ข้อความ'],['u','ลิงก์ (URL หรือ page:รหัส)']],{t:'',u:'#'});
+ if(tab=='news')h=LST('news','ข่าว',[['d','วันที่'],['t','หัวข้อ'],['u','ลิงก์']],{d:'',t:'',u:'#'});
+ if(tab=='execs')h=LST('execs','ผู้บริหาร',[['img','รูป','i'],['n','ชื่อ'],['r','ตำแหน่ง']],{img:'',n:'',r:''});
+ if(tab=='acts')h=LST('acts','กิจกรรม',[['img','รูป','i'],['d','วันที่'],['t','ชื่อกิจกรรม']],{img:'',d:'',t:''});
+ if(tab=='ft')h=F('ที่อยู่',S.ft,'addr')+F('โทรศัพท์',S.ft,'tel')+F('อีเมล',S.ft,'mail')+F('ลิงก์ Facebook',S.ft,'fb');
+ if(tab=='show')h='<div class="hint">เลือกส่วนที่จะแสดงบนหน้าแรก</div>'+[['links','ลิงก์ด่วน'],['news','ข่าวประกาศ'],['execs','คณะผู้บริหาร'],['acts','ภาพกิจกรรม'],['ft','ท้ายเว็บ']].map(function(x){return '<label style="font-size:15px;color:var(--tx)"><input type="checkbox" '+(S.show[x[0]]?'checked':'')+' onchange="S.show.'+x[0]+'=this.checked?1:0"> '+x[1]+'</label>'}).join('');
  var bd=$('bd');bd.innerHTML=h;
  bd.querySelectorAll('[data-b]').forEach(function(e){var o=REG[e.dataset.b],k=e.dataset.k;e.oninput=function(){o[k]=e.type=='number'?(e.value===''?'':+e.value):e.value}});
  bd.querySelectorAll('[data-pv]').forEach(async function(e){var a=e.dataset.pv.split('|'),d=await getImg(REG[a[0]][a[1]]);if(d)e.innerHTML='<img class="pv" src="'+d+'">'});
  bd.querySelectorAll('[data-im]').forEach(function(e){e.onchange=async function(){var a=e.dataset.im.split('|'),f=e.files[0];if(!f)return;var box=e.parentNode,rmc=box.querySelector('[data-rmc]'),rms=box.querySelector('[data-rms]');
-  try{toast('กำลังอัปโหลด...');var d=await pick(f,rmc&&rmc.checked?Math.min(+a[2],700):+a[2],rmc&&rmc.checked?+rms.value:0),id=await putImg(d);REG[a[0]][a[1]]=id;toast('ใส่รูปแล้ว กดบันทึกเพื่อยืนยัน');body()}catch(er){toast('อัปโหลดไม่สำเร็จ: '+er.message)}}});
- bd.querySelectorAll('[data-clr]').forEach(function(e){e.onclick=function(){var a=e.dataset.clr.split('|');REG[a[0]][a[1]]='';body()}})}
-function ab(k){S.blocks.push({k:k,v:'',u:'',w:'',al:'c'});body()}
-function mb(i,d){var B=S.blocks;if(!d)B.splice(i,1);else{var j=i+d;if(j<0||j>=B.length)return;var t=B[i];B[i]=B[j];B[j]=t}body()}
+  try{toast('กำลังอัปโหลด...');var d=await pick(f,rmc&&rmc.checked?Math.min(+a[2],700):+a[2],rmc&&rmc.checked?+rms.value:0),id=await putImg(d);REG[a[0]][a[1]]=id;toast('ใส่รูปแล้ว กดบันทึกเพื่อยืนยัน');rb()}catch(er){toast('อัปโหลดไม่สำเร็จ: '+er.message)}}});
+ bd.querySelectorAll('[data-clr]').forEach(function(e){e.onclick=function(){var a=e.dataset.clr.split('|');REG[a[0]][a[1]]='';rb()}})}
+function LST(arr,title,fs,nw){var js=JSON.stringify(nw).replace(/"/g,'&quot;');return '<div class="row"><button class="b o m" onclick="S.'+arr+'.push('+js+');rb()">+ เพิ่ม</button></div>'+S[arr].map(function(o,i){var x='<div class="it"><div class="row"><b style="flex:1">'+title+' '+(i+1)+'</b><button class="b s m" onclick="ml(\''+arr+'\','+i+',-1)">↑</button><button class="b s m" onclick="ml(\''+arr+'\','+i+',1)">↓</button><button class="b d m" onclick="ml(\''+arr+'\','+i+',0)">ลบ</button></div>';fs.forEach(function(f){x+=f[2]=='i'?IM(f[1],o,f[0],700,1):F(f[1],o,f[0])});return x+'</div>'}).join('')}
+function imp(e){var f=e.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{S=Object.assign({},DEF,JSON.parse(r.result));rb();toast('นำเข้าแล้ว กดบันทึก')}catch(x){toast('ไฟล์ไม่ถูกต้อง')}};r.readAsText(f)}
+function ab(k){S.blocks.push({k:k,v:'',u:'',w:'',al:'c'});rb()}
+function mb(i,d){ml('blocks',i,d)}
+function ml(a,i,d){var B=S[a];if(!d)B.splice(i,1);else{var j=i+d;if(j<0||j>=B.length)return;var t=B[i];B[i]=B[j];B[j]=t}rb()}
 async function setpw(){var p=$('np').value;if(p.length<6)return toast('รหัสผ่านสั้นเกินไป');S.ph=await sha(p);toast('ตั้งรหัสใหม่แล้ว กดบันทึกด้านบน')}
 function expo(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='school-data.json';a.click()}
-(async function(){await load();paint();splash()})();
+(async function(){await load();S.show=Object.assign({links:1,execs:1,news:1,acts:1,ft:1},S.show);paint();splash()})();
 </script></body></html>
