@@ -83,6 +83,28 @@ details.it summary{cursor:pointer;font-weight:500}
 #bd label.up{display:inline-flex;align-items:center;gap:6px;cursor:pointer;margin:0;font-size:14px;color:#fff;padding:9px 16px}
 .up input{display:none}
 #fe{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:130;display:none;gap:8px;filter:drop-shadow(0 2px 8px #0005)}#fe.on{display:flex}
+.ic{width:1.15em;height:1.15em;vertical-align:-.2em;display:inline-block;transform-origin:50% 85%;animation:icb 2.2s ease-in-out infinite}
+@keyframes icb{0%,55%,100%{transform:none}65%{transform:translateY(-3px) rotate(-9deg)}75%{transform:translateY(0) rotate(9deg)}85%{transform:rotate(-4deg)}}
+@media (prefers-reduced-motion:reduce){.ic{animation:none}}
+.add button span{font-size:26px;line-height:1}
+#fe .b.s{background:var(--bg)}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:140;background:var(--bg);border-radius:20px 20px 0 0;box-shadow:0 -6px 24px #0004;max-height:58vh;display:none;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px)}#sheet.on{display:flex}
+#sheet .hd{display:flex;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--bd)}#sheet .hd b{flex:1;font-weight:600}
+#shb{overflow:auto;padding:4px 14px 30px}
+#shb label{display:block;font-size:12px;color:var(--mu);margin-top:10px}
+#shb label.up{display:inline-flex;align-items:center;gap:6px;cursor:pointer;margin:0;font-size:14px;color:#fff;padding:9px 16px}
+#shb input[type=range]{width:100%}#shb .b.on{background:var(--or);color:#fff;border-color:var(--or)}
+body.sh #app,body.sh #pgb{padding-bottom:60vh}body.sh #fe{display:none}
+.edw{position:relative}
+body.em .edw,body.em [data-ed]{outline:2px dashed var(--or);outline-offset:2px;border-radius:6px}
+.edadd{border:2px dashed var(--or);color:var(--or);border-radius:14px;padding:14px;text-align:center;margin:18px 0;font-weight:500}
+.bw{margin:18px 0}.bw>.blk{margin:0}
+.rbw{background-size:300% 100%!important;animation:rbm 6s linear infinite}
+@keyframes rbm{to{background-position:300% 0}}
+.rtx h2,.rtx p{background:linear-gradient(90deg,#ff3b3b,#ff9f1a,#ffe14d,#3ddc84,#2bb7ff,#6c5ce7,#ff4fd8,#ff3b3b);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:rbm 6s linear infinite;display:inline-block}
+.rbbg .sheet{background:linear-gradient(120deg,#ffd6e0,#fff3c4,#d4f7dc,#d0ecff,#e5d9ff,#ffd6e0);background-size:300% 300%;animation:rbm2 10s ease infinite;color:#222}
+@keyframes rbm2{50%{background-position:100% 50%}}
+.pn details details{margin-left:12px}
 </style></head><body>
 <div id="sp"></div><div id="app"></div>
 <div id="dr"><div class="bk" onclick="dr(0)"></div><div class="pn" id="pn"></div></div>
@@ -90,7 +112,8 @@ details.it summary{cursor:pointer;font-weight:500}
 <div id="pg"><div class="ph"><button class="b s m" onclick="closePg()">← กลับ</button><b id="pgt"></b><button class="b o m" id="pge" onclick="editCur()" style="display:none;margin-left:auto">✏️ แก้หน้านี้</button></div><div id="pgb"></div></div>
 <div id="ad"><div class="hd"><b>⚙️ เมนูแอดมิน</b><span class="hint" id="md"></span><button class="b o m" onclick="save()">บันทึก</button><button class="b s m" onclick="adm(0)">👁 ดูหน้าเว็บ</button></div><div id="tabs"></div><div id="bd"></div></div>
 <div id="ts"></div>
-<div id="fe"><button class="b s" style="background:var(--bg)" onclick="save()">💾 บันทึก</button><button class="b o" onclick="adm(1)">✏️ แก้ไข</button></div>
+<div id="fe"><button class="b s" onclick="save()">💾 บันทึก</button><button class="b o" id="fet" onclick="setEM(!EM)">✏️ แก้บนหน้า</button><button class="b s" onclick="setEM(0);adm(1)">⚙ แอดมิน</button></div>
+<div id="sheet"><div class="hd"><b id="sht"></b><button class="b s m" onclick="save()">💾 บันทึก</button><button class="b o m" onclick="closeSheet()">✓ เสร็จ</button></div><div id="shb"></div></div>
 <script>
 var $=function(i){return document.getElementById(i)};
 var CFG={apiKey:"AIzaSyASvuyhGLcblkYWRuHhXOuIi2Gj6zYtzJU",authDomain:"chingame-ae1ce.firebaseapp.com",projectId:"chingame-ae1ce",appId:"1:691058862335:web:4f4597ec07c7a7245bc4ca"};
@@ -108,7 +131,7 @@ execs:[{img:'',n:'ชื่อ นามสกุล',r:'ผู้อำนว�
 acts:[{img:'',d:'',t:'ภาพกิจกรรมล่าสุด'}],
 ft:{addr:'ที่อยู่โรงเรียน',tel:'โทร 000-000-0000',mail:'',fb:''},
 show:{cards:1,blocks:1,links:1,execs:1,news:1,acts:1,ft:1},ord:['cards','links','blocks','news','execs','acts'],tt:{links:'ลิงก์ด่วน',news:'ข่าวประกาศ',execs:'คณะผู้บริหาร',acts:'ภาพกิจกรรม'},ex:{sh:'circle',sz:96,ra:'1/1',fit:'cover',bw:0,bc:'#f09c38'},ax:{ra:'4/3',rd:18,cols:2}};
-var S=JSON.parse(JSON.stringify(DEF)),me=false,tab='blk',curId='',curPg=0,lastNew=null,moreT=false;
+var S=JSON.parse(JSON.stringify(DEF)),me=false,tab='blk',curId='',curPg=0,lastNew=null,moreT=false,EDR=[],EM=false,SH=null,BDT=null,LT=0;
 var SN={cards:'การ์ดฟ้า/ส้ม',links:'ลิงก์ด่วน',blocks:'เนื้อหาที่เพิ่มเอง',news:'ข่าวประกาศ',execs:'คณะผู้บริหาร',acts:'ภาพกิจกรรม'};
 function norm(){var D=JSON.parse(JSON.stringify(DEF));S.show=Object.assign(D.show,S.show);S.ord=(S.ord||D.ord).slice();D.ord.forEach(function(k){if(S.ord.indexOf(k)<0)S.ord.push(k)});S.tt=Object.assign(D.tt,S.tt);S.ex=Object.assign(D.ex,S.ex);S.ax=Object.assign(D.ax,S.ax);if(!S.mn)S.mn=D.mn;
  S.pages.forEach(function(p){if(!p.blocks){p.blocks=[];if(p.img)p.blocks.push({k:'i',v:p.img,w:'',al:'c'});if(p.body)p.blocks.push({k:'p',v:p.body})}})}
@@ -130,44 +153,44 @@ function pick(file,max,rm){return new Promise(function(ok,no){var f=new FileRead
 /* ===== หน้าเว็บ ===== */
 function nm(){return '<div class="n1">'+E(S.name1)+'<b>'+E(S.name2)+'</b></div><div class="n2">'+E(S.en)+'</div>'}
 function vid(u){var m=u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);return m?'<iframe src="https://www.youtube.com/embed/'+m[1]+'" allowfullscreen></iframe>':'<video src="'+E(u)+'" controls playsinline></video>'}
-function blk(b){var w=b.w?' style="width:'+b.w+'%;margin:0 '+(b.al=='c'?'auto':b.al=='r'?'0 0 auto':'auto 0 0')+'"':'';
+function blk0(b){var w=b.w?' style="width:'+b.w+'%;margin:0 '+(b.al=='c'?'auto':b.al=='r'?'0 0 auto':'auto 0 0')+'"':'';
  if(b.k=='h')return '<div class="blk"><h2>'+E(b.v)+'</h2></div>';if(b.k=='p')return '<div class="blk"><p>'+E(b.v)+'</p></div>';
  if(b.k=='i')return '<div class="blk"><img data-m="'+E(b.v)+'" alt=""'+w+'></div>';if(b.k=='v'&&b.v)return '<div class="blk"'+(b.w?' style="width:'+b.w+'%"':'')+'>'+vid(b.v)+'</div>';
  if(b.k=='l')return '<div class="blk"><a class="btn" href="#" data-go="'+E(b.u)+'">'+E(b.v)+'</a></div>';return''}
 function paint(){
- var r=document.documentElement.style;r.setProperty('--or',S.colOr);r.setProperty('--bl',S.colBl);if(S.colBg&&S.colBg!='#fdfcf9')r.setProperty('--bg',S.colBg);document.title=S.name1+S.name2;
+ var r=document.documentElement.style;r.setProperty('--or',S.colOr);r.setProperty('--bl',S.colBl);if(S.colBg&&S.colBg!='#fdfcf9')r.setProperty('--bg',S.colBg);document.title=S.name1+S.name2;if(S.colTx)r.setProperty('--tx',S.colTx);document.body.classList.toggle('rbbg',S.bgm=='r');
  window.cd=function(c,i){return '<a class="card" data-go="'+E(c.u)+'" data-m="'+E(c.img)+'" style="background-color:'+E(c.col)+'">'+E(c.t)+'</a>'};
- $('app').innerHTML='<header><img class="lg" data-m="'+E(S.logo)+'" alt=""><div class="sep"></div><div>'+nm()+'</div><button id="mb" onclick="dr(1)" aria-label="เมนู"><i></i><i></i><i></i></button></header><div class="hero" data-m="'+E(S.hero)+'"></div><div class="sheet"><div class="n2">'+E(S.en)+'</div>'+secs()+'</div>'+foot();
+ $('app').innerHTML='<header'+EA({k:'tab',t:'gen'})+'><img class="lg" data-m="'+E(S.logo)+'" alt=""><div class="sep"></div><div>'+nm()+'</div><button id="mb" onclick="dr(1)" aria-label="เมนู"><i></i><i></i><i></i></button></header><div class="hero'+'"'+EA({k:'tab',t:'gen'})+' data-m="'+E(S.hero)+'"></div><div class="sheet"><div class="n2">'+E(S.en)+'</div>'+secs()+'</div>'+foot();
  menu();fill();document.querySelectorAll('[data-go]').forEach(function(a){a.onclick=function(e){e.preventDefault();go(a.dataset.go)}})}
 function sh(k,b){return S.show[k]?'<div class="blk"><h2>'+E(S.tt[k])+'</h2>'+b+'</div>':''}
 function exs(){var e=S.ex;return 'display:block;margin:0 auto 6px;height:auto;width:'+e.sz+'px;aspect-ratio:'+(e.sh=='circle'?'1/1':e.ra)+';border-radius:'+(e.sh=='circle'?'50%':e.sh=='rounded'?'20px':'0')+';object-fit:'+e.fit+';border:'+e.bw+'px solid '+e.bc}
-function secs(){var SC={cards:function(){return '<div class="cards">'+cd(S.c1)+cd(S.c2)+'</div>'},blocks:function(){return S.blocks.map(blk).join('')},
+function secs(){var SC={cards:function(){return '<div class="cards">'+cd(S.c1)+cd(S.c2)+'</div>'},blocks:function(){return S.blocks.map(blk).join('')+ADDB(S.blocks)},
 links:function(){return sh('links','<div class="ql">'+S.links.map(function(l){return '<a href="#" data-go="'+E(l.u)+'">'+E(l.t)+'</a>'}).join('')+'</div>')},
 news:function(){return sh('news','<div class="nw">'+S.news.map(function(n){return '<a href="#" data-go="'+E(n.u)+'"><b>'+E(n.d)+'</b><span>'+E(n.t)+'</span></a>'}).join('')+'</div>')},
 execs:function(){return sh('execs','<div class="ex" style="grid-template-columns:repeat(auto-fill,minmax('+(S.ex.sz+20)+'px,1fr))">'+S.execs.map(function(e){return '<div><img data-m="'+E(e.img)+'" style="'+exs()+'" alt=""><b>'+E(e.n)+'</b><small>'+E(e.r)+'</small></div>'}).join('')+'</div>')},
 acts:function(){return sh('acts','<div class="ac" style="grid-template-columns:repeat('+(+S.ax.cols||2)+',1fr)">'+S.acts.map(function(a){return '<div><img data-m="'+E(a.img)+'" style="aspect-ratio:'+S.ax.ra+';border-radius:'+S.ax.rd+'px" alt=""><b>'+E(a.t)+'</b><br><small>'+E(a.d)+'</small></div>'}).join('')+'</div>')}};
-return S.ord.map(function(k){return k=='cards'||k=='blocks'?(S.show[k]?SC[k]():''):SC[k]()}).join('')}
-function foot(){var f=S.ft;return S.show.ft?'<footer>'+E([S.name1+S.name2,f.addr,f.tel,f.mail].filter(Boolean).join('\n'))+(f.fb?'\n<a href="'+E(f.fb)+'" target="_blank" style="color:var(--or)">Facebook</a>':'')+'</footer>':''}
+var TM={cards:'home',links:'links',news:'news',execs:'execs',acts:'acts'};return S.ord.map(function(k){var h=k=='cards'||k=='blocks'?(S.show[k]?SC[k]():''):SC[k]();return EM&&TM[k]&&h?EW(h,{k:'tab',t:TM[k]}):h}).join('')}
+function foot(){var f=S.ft;return S.show.ft?'<footer'+EA({k:'tab',t:'ft'})+'>'+E([S.name1+S.name2,f.addr,f.tel,f.mail].filter(Boolean).join('\n'))+(f.fb?'\n<a href="'+E(f.fb)+'" target="_blank" style="color:var(--or)">Facebook</a>':'')+'</footer>':''}
 function menu(){var h='<button class="x" onclick="dr(0)">×</button><div style="font-weight:600;margin-bottom:14px">เมนู</div>';
- S.mn.forEach(function(o){var k=o.kids||[];h+=k.length?'<details><summary>'+E(o.t)+'</summary>'+(o.u&&o.u!='#'?'<a href="#" data-go="'+E(o.u)+'">เปิด '+E(o.t)+'</a>':'')+k.map(function(c){return '<a href="#" data-go="'+E(c.u)+'">'+E(c.t)+'</a>'}).join('')+'</details>':'<a href="#" data-go="'+E(o.u)+'">'+E(o.t)+'</a>'});
- h+='<a href="#" class="ad" onclick="adminOpen();return false">🔒 Admin</a>';$('pn').innerHTML=h;
+  S.mn.forEach(function(o){h+=mnu(o)});
+ h+=(EM?'<a href="#" class="ad" onclick="dr(0);openSheet({k:\'tab\',t:\'menu\'});return false">✏️ แก้เมนูนี้ (เพิ่ม/ลบ/ใส่ลิงก์/สร้างหน้า)</a>':'');h+='<a href="#" class="ad" onclick="adminOpen();return false">🔒 Admin</a>';$('pn').innerHTML=h;
  $('pn').querySelectorAll('[data-go]').forEach(function(a){a.onclick=function(e){e.preventDefault();dr(0);go(a.dataset.go)}})}
 function dr(on){$('dr').classList.toggle('on',!!on)}
 function bg(r){r.querySelectorAll('[data-go]').forEach(function(a){a.onclick=function(e){e.preventDefault();go(a.dataset.go)}})}
 function closePg(){$('pg').classList.remove('on')}
 function go(u){if(!u||u=='#')return;if(u=='home'){closePg();scrollTo(0,0);return}
- if(u.indexOf('page:')==0){var p=S.pages.filter(function(x){return x.id==u.slice(5)})[0];if(!p)return toast('ไม่พบหน้านี้');$('pgt').textContent=p.t;curId=p.id;$('pge').style.display=me?'':'none';$('pgb').innerHTML=p.blocks.map(blk).join('');bg($('pgb'));fill($('pgb'));$('pg').classList.add('on');$('pg').scrollTop=0;return}
+ if(u.indexOf('page:')==0){var p=S.pages.filter(function(x){return x.id==u.slice(5)})[0];if(!p)return toast('ไม่พบหน้านี้');$('pgt').textContent=p.t;curId=p.id;$('pge').style.display=me&&EM?'':'none';$('pgb').innerHTML=p.blocks.map(blk).join('')+ADDB(p.blocks);bg($('pgb'));fill($('pgb'));$('pg').classList.add('on');$('pg').scrollTop=0;return}
  window.open(u,'_blank')}
 /* ===== หน้าเปิด (Splash) ===== */
 async function splash(){var sp=$('sp');if(S.splashOnce&&sessionStorage.getItem('sp')){sp.remove();return}sessionStorage.setItem('sp','1');
  sp.innerHTML='<img class="lg" data-m="'+E(S.logo)+'" alt=""><div class="t">'+nm()+'</div><div class="bar"><i id="pb"></i></div>';fill(sp);
  var b=$('pb'),a=b.animate([{width:'0%'},{width:'100%'}],{duration:+S.splashMs||2400,easing:'ease-in-out',fill:'forwards'});await a.finished;sp.classList.add('o');setTimeout(function(){sp.remove()},700)}
 /* ===== แอดมิน ===== */
-async function adminOpen(){dr(0);if(me)return adm(1);$('lg').classList.add('on');$('pw').value='';$('er').textContent='';setTimeout(function(){$('pw').focus()},50)}
-async function login(){var h=await sha($('pw').value),ok=S.ph?h==S.ph:$('pw').value=='admin1234';if(ok){me=true;$('lg').classList.remove('on');adm(1)}else $('er').textContent='รหัสผ่านไม่ถูกต้อง'}
+async function adminOpen(){dr(0);if(me)return setEM(1);$('lg').classList.add('on');$('pw').value='';$('er').textContent='';setTimeout(function(){$('pw').focus()},50)}
+async function login(){var h=await sha($('pw').value),ok=S.ph?h==S.ph:$('pw').value=='admin1234';if(ok){me=true;$('lg').classList.remove('on');setEM(1)}else $('er').textContent='รหัสผ่านไม่ถูกต้อง'}
 $('pw').onkeydown=function(e){if(e.key=='Enter')login()};
 function adm(on){$('ad').classList.toggle('on',!!on);$('fe').classList.toggle('on',me&&!on);if(on){$('md').textContent=mode=='cloud'?'☁️ ฐานข้อมูล':'💾 ในเครื่อง';tabs();rb()}}
-var TB=[['blk','📝 เนื้อหาหน้าแรก'],['pgs','📄 หน้าย่อย'],['menu','☰ เมนู'],['gen','🎨 ชื่อ/สี/โลโก้'],['home','🃏 การ์ด'],['links','🔗 ลิงก์ด่วน'],['news','📰 ข่าว'],['execs','👤 ผู้บริหาร'],['acts','🖼️ กิจกรรม'],['ft','📍 ท้ายเว็บ'],['show','👁 แสดง/ซ่อน/เรียง'],['sec','🔒 ระบบ']];
+var TB=[['blk','📝 เนื้อหาหน้าแรก'],['pgs','📄 หน้าย่อย'],['menu','📋 เมนู'],['gen','🎨 ชื่อ/สี/โลโก้'],['home','🃏 การ์ด'],['links','🔗 ลิงก์ด่วน'],['news','📰 ข่าว'],['execs','👤 ผู้บริหาร'],['acts','🖼️ กิจกรรม'],['ft','📍 ท้ายเว็บ'],['show','👁 แสดง/ซ่อน/เรียง'],['sec','🔒 ระบบ']];
 function tabs(){lastNew=null;var vis=TB.filter(function(t,i){return i<4||moreT||t[0]==tab});$('tabs').innerHTML=vis.map(function(t){return '<button class="b s m'+(t[0]==tab?' on':'')+'" onclick="tab=\''+t[0]+'\';tabs();rb()">'+t[1]+'</button>'}).join('')+'<button class="b s m" onclick="moreT=!moreT;tabs()">'+(moreT?'▲ ย่อ':'▼ อื่นๆ')+'</button>'}
 function inp(l,o,k,t){return '<label>'+l+'</label><input '+(t||'')+' value="'+E(o[k])+'" oninput="this._o[\''+k+'\']=this.type==\'number\'?+this.value:this.value">'}
 function bindAll(root,pairs){root.querySelectorAll('[data-b]').forEach(function(e){e._o=pairs[e.dataset.b]})}
@@ -176,7 +199,7 @@ function F(l,o,k,t){var n=REG.push(o)-1;return '<label>'+l+'</label><input '+(t|
 function T(l,o,k,rows){var n=REG.push(o)-1;return '<label>'+l+'</label><textarea rows="'+(rows||3)+'" data-b="'+n+'" data-k="'+k+'">'+E(o[k])+'</textarea>'}
 function IM(l,o,k,mx,rm){var n=REG.push(o)-1;return '<label>'+l+'</label><div class="imw"><div data-pv="'+n+'|'+k+'"></div><div class="row"><label class="b o m up">📷 เลือกรูป<input type="file" accept="image/*" data-im="'+n+'|'+k+'|'+(mx||900)+'"></label>'+(rm?'<label style="margin:0;display:inline-flex;gap:4px;align-items:center"><input type="checkbox" data-rmc style="display:inline-block"> ลบพื้นหลัง</label><input type="range" min="20" max="140" value="60" data-rms title="ความไว" style="flex:1;min-width:80px">':'')+'<button class="b d m" data-clr="'+n+'|'+k+'">ลบรูป</button></div></div>'}
 function rb(){REG=[];var h='',B=S.blocks;
- if(tab=='gen')h='<h3>ชื่อและโลโก้</h3>'+F('คำหน้าชื่อ (สีดำ)',S,'name1')+F('ชื่อโรงเรียน (สีส้ม)',S,'name2')+F('ชื่ออังกฤษ',S,'en')+IM('โลโก้',S,'logo',500,1)+IM('รูปปกหน้าแรก',S,'hero',1200)+'<h3>สี</h3><div class="row"><div>'+F('สีส้ม',S,'colOr','type=color')+'</div><div>'+F('สีฟ้า',S,'colBl','type=color')+'</div><div>'+F('สีพื้นเว็บ',S,'colBg','type=color')+'</div></div><h3>หน้าเปิด</h3>'+F('เวลาแถบโหลด (มิลลิวินาที)',S,'splashMs','type=number')+'<label><input type="checkbox" '+(S.splashOnce?'checked':'')+' onchange="S.splashOnce=this.checked?1:0"> แสดงครั้งเดียวต่อการเข้าเว็บ</label>';
+ if(tab=='gen')h='<h3>ชื่อและโลโก้</h3>'+F('คำหน้าชื่อ (สีดำ)',S,'name1')+F('ชื่อโรงเรียน (สีส้ม)',S,'name2')+F('ชื่ออังกฤษ',S,'en')+IM('โลโก้',S,'logo',500,1)+IM('รูปปกหน้าแรก',S,'hero',1200)+'<h3>สี</h3><div class="row"><div>'+F('สีส้ม',S,'colOr','type=color')+'</div><div>'+F('สีฟ้า',S,'colBl','type=color')+'</div><div>'+F('สีพื้นเว็บ',S,'colBg','type=color')+'</div><div>'+F('สีตัวอักษรทั้งเว็บ',S,'colTx','type=color')+'</div></div>'+SEL('พื้นหลังเว็บ',S,'bgm',[['','สีเดียว (สีพื้นเว็บ)'],['r','สีรุ้งนุ่มๆ เคลื่อนไหว']])+'<h3>หน้าเปิด</h3>'+F('เวลาแถบโหลด (มิลลิวินาที)',S,'splashMs','type=number')+'<label><input type="checkbox" '+(S.splashOnce?'checked':'')+' onchange="S.splashOnce=this.checked?1:0"> แสดงครั้งเดียวต่อการเข้าเว็บ</label>';
  if(tab=='home')h=[S.c1,S.c2].map(function(c,i){return '<div class="it"><b>การ์ด '+(i+1)+'</b>'+F('ข้อความ',c,'t')+F('ลิงก์ (URL หรือ page:รหัสหน้า)',c,'u')+F('สีพื้น',c,'col','type=color')+IM('รูปพื้นการ์ด (ถ้ามี)',c,'img',800)+'</div>'}).join('');
  if(tab=='blk')h='<div class="hint">กดปุ่มด้านบนเพื่อเพิ่มส่วนใหม่ (ต่อท้ายด้านล่าง) · ใช้ ↑ ↓ เลื่อนตำแหน่ง · เสร็จแล้วกด "บันทึก" ด้านบนขวา</div>'+BLK(S.blocks);
  if(tab=='menu')h='<div class="hint">เพิ่มเมนูแล้วกด "สร้างหน้าใหม่ให้เมนูนี้" ระบบจะพาไปพิมพ์เนื้อหาหน้านั้นทันที</div><div class="row"><button class="b o m" onclick="S.mn.push({t:\'เมนูใหม่\',u:\'#\',kids:[]});rb()">+ เพิ่มเมนู</button></div>'+S.mn.map(function(o,i){return MI(S.mn,i,o,1)}).join('');
@@ -188,7 +211,8 @@ function rb(){REG=[];var h='',B=S.blocks;
  if(tab=='acts')h='<div class="it"><b>รูปแบบรูปกิจกรรม</b>'+SEL('สัดส่วนรูป',S.ax,'ra',[['4/3','4:3'],['1/1','1:1'],['16/9','16:9'],['3/4','3:4']])+RG('ความโค้งมุม',S.ax,'rd',0,40)+SEL('จำนวนคอลัมน์',S.ax,'cols',[['1','1'],['2','2'],['3','3'],['4','4']])+'</div>'+LST('acts','กิจกรรม',[['img','รูป','i'],['d','วันที่'],['t','ชื่อกิจกรรม']],{img:'',d:'',t:''});
  if(tab=='ft')h=F('ที่อยู่',S.ft,'addr')+F('โทรศัพท์',S.ft,'tel')+F('อีเมล',S.ft,'mail')+F('ลิงก์ Facebook',S.ft,'fb');
  if(tab=='show')h='<div class="hint">เรียงลำดับส่วนบนหน้าแรกด้วยปุ่ม ↑↓ ติ๊กเพื่อแสดง/ซ่อน และแก้ชื่อหัวข้อได้</div>'+S.ord.map(function(k,i){var n=REG.push(S.ord)-1;return '<div class="it"><div class="row"><label style="font-size:15px;color:var(--tx);flex:1;margin:0"><input type="checkbox" '+(S.show[k]?'checked':'')+' onchange="S.show.'+k+'=this.checked?1:0"> '+SN[k]+'</label><button class="b s m" onclick="ml2('+n+','+i+',-1)">↑</button><button class="b s m" onclick="ml2('+n+','+i+',1)">↓</button></div>'+(S.tt[k]!=null?F('ชื่อหัวข้อ',S.tt,k):'')+'</div>'}).join('')+'<label style="font-size:15px;color:var(--tx)"><input type="checkbox" '+(S.show.ft?'checked':'')+' onchange="S.show.ft=this.checked?1:0"> แสดงท้ายเว็บ</label>';
- var bd=$('bd');bd.innerHTML=h;
+ var bd=BDT||$('bd');bd.innerHTML=h;bindUI(bd)}
+function bindUI(bd){
  bd.querySelectorAll('[data-b]').forEach(function(e){var o=REG[e.dataset.b],k=e.dataset.k;e.oninput=function(){o[k]=e.type=='number'?(e.value===''?'':+e.value):e.value}});
  bd.querySelectorAll('[data-pv]').forEach(async function(e){var a=e.dataset.pv.split('|'),d=await getImg(REG[a[0]][a[1]]);if(d)e.innerHTML='<img class="pv" src="'+d+'">'});
  bd.querySelectorAll('[data-im]').forEach(function(e){e.onchange=async function(){var a=e.dataset.im.split('|'),f=e.files[0];if(!f)return;var box=e.closest('.imw'),rmc=box.querySelector('[data-rmc]'),rms=box.querySelector('[data-rms]');
@@ -212,8 +236,8 @@ function LK(o){var n=REG.push(o)-1,cur=o.u||'#',op=[['#','— ไม่มีล
  return '<label>เปิดไปที่</label><select onchange="REG['+n+'].u=this.value==\'__\'?\'https://\':this.value;rb()">'+op.concat([['__','ลิงก์ภายนอก (พิมพ์เอง)']]).map(function(x){return '<option value="'+E(x[0])+'"'+((x[0]==cur||(x[0]=='__'&&!inl))?' selected':'')+'>'+E(x[1])+'</option>'}).join('')+'</select>'+(inl?'':F('URL',o,'u'))}
 function MI(arr,i,o,top){var an=REG.push(arr)-1,on=REG.push(o)-1;o.kids=o.kids||[];
  return '<div class="it"><div class="row"><b style="flex:1">'+E(o.t)+'</b><button class="b s m" onclick="ml2('+an+','+i+',-1)">↑</button><button class="b s m" onclick="ml2('+an+','+i+',1)">↓</button><button class="b d m" onclick="ml2('+an+','+i+',0)">ลบ</button></div>'+F('ชื่อเมนู',o,'t')+LK(o)
- +'<div class="row">'+(String(o.u).indexOf('page:')==0?'<button class="b o m" onclick="editPg('+on+')">✏️ แก้เนื้อหาหน้านี้</button>':'<button class="b o m" onclick="mkpg('+on+')">+ สร้างหน้าใหม่ให้เมนูนี้</button>')+''+(top?'<button class="b s m" onclick="REG['+on+'].kids.push({t:\'เมนูย่อย\',u:\'#\'});rb()">+ เมนูย่อย</button>':'')+'</div>'
- +(top?o.kids.map(function(k,j){return MI(o.kids,j,k,0)}).join(''):'')+'</div>'}
+ +'<div class="row">'+(String(o.u).indexOf('page:')==0?'<button class="b o m" onclick="editPg('+on+')">✏️ แก้เนื้อหาหน้านี้</button>':'<button class="b o m" onclick="mkpg('+on+')">+ สร้างหน้าใหม่ให้เมนูนี้</button>')+''+(top&&top<4?'<button class="b s m" onclick="REG['+on+'].kids.push({t:\'เมนูย่อย\',u:\'#\'});rb()">+ เมนูย่อย</button>':'')+'</div>'
+ +(top&&top<4?o.kids.map(function(k,j){return MI(o.kids,j,k,top+1)}).join(''):'')+'</div>'}
 function mkpg(n){var o=REG[n],id='p'+Date.now().toString(36);S.pages.push({id:id,t:o.t||'หน้าใหม่',blocks:[{k:'h',v:o.t||'หน้าใหม่'},{k:'p',v:'เขียนเนื้อหาที่นี่'}]});o.u='page:'+id;curPg=S.pages.length-1;tab='pgs';tabs();rb();$('bd').scrollTop=0;toast('สร้างหน้าแล้ว พิมพ์เนื้อหาได้เลย')}
 function editPg(n){var id=String(REG[n].u).slice(5),i=S.pages.findIndex(function(p){return p.id==id});if(i<0)return toast('ไม่พบหน้านี้');curPg=i;tab='pgs';tabs();rb();$('bd').scrollTop=0}
 function editCur(){var i=S.pages.findIndex(function(p){return p.id==curId});if(i>=0)curPg=i;closePg();tab='pgs';adm(1)}
@@ -221,5 +245,59 @@ function mb(i,d){ml('blocks',i,d)}
 function ml(a,i,d){var B=S[a];if(!d)B.splice(i,1);else{var j=i+d;if(j<0||j>=B.length)return;var t=B[i];B[i]=B[j];B[j]=t}rb()}
 async function setpw(){var p=$('np').value;if(p.length<6)return toast('รหัสผ่านสั้นเกินไป');S.ph=await sha(p);toast('ตั้งรหัสใหม่แล้ว กดบันทึกด้านบน')}
 function expo(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='school-data.json';a.click()}
+/* ===== แก้ไขบนหน้าเว็บ (Live Edit) ===== */
+var RBW='linear-gradient(90deg,#ff3b3b,#ff9f1a,#ffe14d,#3ddc84,#2bb7ff,#6c5ce7,#ff4fd8,#ff3b3b)';
+var ICP={h:'<path d="M5 5v14M19 5v14M5 12h14"/>',p:'<path d="M4 6h16M4 11h16M4 16h10"/>',i:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M4 18l5-5 4 4 3-3 4 4"/>',v:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>',l:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',edit:'<path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>',save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',pal:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a3 3 0 0 0 3-3c0-6-4-11-8-11z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16" cy="11" r="1"/>',card:'<rect x="3" y="5" width="8" height="6" rx="2"/><rect x="13" y="5" width="8" height="6" rx="2"/><rect x="3" y="13" width="8" height="6" rx="2"/><rect x="13" y="13" width="8" height="6" rx="2"/>',news:'<path d="M5 4h12v16H7a2 2 0 0 1-2-2z"/><path d="M17 8h3v10a2 2 0 0 1-2 2M8 8h6M8 12h6M8 16h4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',pin:'<path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',page:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',cloud:'<path d="M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 11a3.5 3.5 0 0 1 0 7z"/>'};
+var ICM={'📝':'p','🔤':'h','🖼':'i','🎬':'v','🔗':'l','📷':'cam','✏':'edit','💾':'save','👁':'eye','📋':'menu','🎨':'pal','🃏':'card','📰':'news','👤':'user','📍':'pin','🔒':'lock','📄':'page','⚙':'gear','☁':'cloud'};
+function IC(n){return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+ICP[n]+'</svg>'}
+var EG=new RegExp('('+Object.keys(ICM).join('|')+')\\uFE0F?','g'),EQ=new RegExp('('+Object.keys(ICM).join('|')+')');
+function icoWalk(root){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),ns=[],n;while(n=w.nextNode()){var p=n.parentNode.nodeName;if(p!='SCRIPT'&&p!='STYLE'&&p!='TEXTAREA'&&p!='OPTION'&&EQ.test(n.nodeValue))ns.push(n)}
+ ns.forEach(function(n){var sp=document.createElement('span');sp.innerHTML=E(n.nodeValue).replace(EG,function(m,c){return IC(ICM[c])});n.parentNode.replaceChild(sp,n)})}
+var icoT=0;new MutationObserver(function(){if(icoT)return;icoT=requestAnimationFrame(function(){icoT=0;icoWalk(document.body)})}).observe(document.body,{childList:true,subtree:true,characterData:true});
+/* สไตล์ของแต่ละส่วน */
+function bs(b){var s=b.s;if(!s)return{st:'',cl:''};var t='',cl='',bm=s.bm,em=s.em,bgc=s.bg||'#ffffff',bc=s.bc||'#f09c38',w=+s.bw||3;
+ if(s.fs)t+='font-size:'+(+s.fs)+'px;';if(s.fw)t+='font-weight:700;';if(s.ta)t+='text-align:'+E(s.ta)+';';
+ if(s.tm=='c'&&s.tc)t+='color:'+E(s.tc)+';';if(s.tm=='r')cl+=' rtx';
+ if(bm=='c'||bm=='r'||em=='c'||em=='r')t+='padding:'+(s.pd==null?12:+s.pd)+'px;border-radius:'+(s.rd==null?14:+s.rd)+'px;';
+ var fill=bm=='c'?'linear-gradient('+E(bgc)+','+E(bgc)+')':bm=='r'?RBW:'';
+ if(em=='r'){t+='border:'+w+'px solid transparent;background-image:'+(fill||'linear-gradient(var(--cd),var(--cd))')+','+RBW+';background-origin:border-box;background-clip:padding-box,border-box;';cl+=' rbw'}
+ else{if(em=='c')t+='border:'+w+'px solid '+E(bc)+';';if(fill){t+='background-image:'+fill+';';if(bm=='r')cl+=' rbw'}}
+ return{st:t,cl:cl}}
+function EW(h,spec){var id=EDR.push(spec)-1;return '<div class="edw" data-ed="'+id+'">'+h+'</div>'}
+function EA(spec){return EM?' data-ed="'+(EDR.push(spec)-1)+'"':''}
+function ADDB(a){return EM?EW('<div class="edadd">+ เพิ่มข้อความ / รูป / วิดีโอ ตรงนี้</div>',{k:'blk',a:a,i:a.length-1,add:1}):''}
+function blk(b,i,a){var r=blk0(b),x=bs(b);if(!r&&EM)r='<div class="blk hint">(วิดีโอ - ยังไม่ได้ใส่ลิงก์)</div>';if(r&&(x.st||x.cl))r='<div class="bw'+x.cl+'" style="'+x.st+'">'+r+'</div>';return EM&&a&&r?EW(r,{k:'blk',a:a,i:i}):r}
+function mnu(o){var k=o.kids||[];return k.length?'<details><summary>'+E(o.t)+'</summary>'+(o.u&&o.u!='#'?'<a href="#" data-go="'+E(o.u)+'">เปิด '+E(o.t)+'</a>':'')+k.map(mnu).join('')+'</details>':'<a href="#" data-go="'+E(o.u)+'">'+E(o.t)+'</a>'}
+function STY(b,op){var s=b.s=b.s||{};if(s.bw==null)s.bw=3;if(s.rd==null)s.rd=14;if(s.pd==null)s.pd=12;if(!s.tc)s.tc='#000000';if(!s.bg)s.bg='#ffffff';if(!s.bc)s.bc='#f09c38';var M=[['','ไม่มี'],['c','สีเดียว'],['r','สีรุ้ง']];
+ return '<details class="it"'+(op?' open':'')+'><summary>🎨 ตกแต่ง สี / ขอบ / ตัวอักษร</summary>'+SEL('สีตัวอักษร',s,'tm',[['','ตามธีมเว็บ'],['c','เลือกสีเอง'],['r','สีรุ้ง']])+F('เลือกสีตัวอักษร',s,'tc','type=color')+SEL('ขนาดตัวอักษร',s,'fs',[['','ปกติ'],['13','เล็ก'],['20','ใหญ่'],['28','ใหญ่มาก'],['40','ใหญ่สุด']])+SEL('ความหนาตัวอักษร',s,'fw',[['','ปกติ'],['1','ตัวหนา']])+SEL('จัดข้อความ',s,'ta',[['','ตามเดิม'],['left','ชิดซ้าย'],['center','กลาง'],['right','ชิดขวา']])+SEL('พื้นหลังส่วนนี้',s,'bm',M)+F('สีพื้นหลัง',s,'bg','type=color')+SEL('ขอบ',s,'em',M)+F('สีขอบ',s,'bc','type=color')+RG('ความหนาขอบ',s,'bw',1,12)+RG('ความโค้งมุม',s,'rd',0,40)+RG('ระยะห่างข้างใน',s,'pd',0,40)+'</details>'}
+function BLK(a,only){var n=REG.push(a)-1,nm={h:'หัวข้อ',p:'ข้อความ',i:'รูปภาพ',v:'วิดีโอ',l:'ปุ่มลิงก์'},ic={h:'🔤',p:'📝',i:'🖼️',v:'🎬',l:'🔗'},pos=only==null?'':(only<0?a.length:only+1);
+ var SZ=function(b){var cur=String(b.w==null?'':b.w),op=[['','เต็มความกว้าง'],['80','ใหญ่ (80%)'],['60','กลาง (60%)'],['40','เล็ก (40%)'],['25','เล็กมาก (25%)']];if(!op.some(function(x){return x[0]==cur}))op.push([cur,cur+'%']);return SEL('ขนาด',b,'w',op)};
+ return '<div class="add">'+['h','p','i','v','l'].map(function(k){return '<button class="b o" onclick="ab('+n+',\''+k+'\''+(pos===''?'':','+pos)+')"><span>'+ic[k]+'</span>+ '+nm[k]+'</button>'}).join('')+'</div>'+(a.length||only!=null?'':'<div class="hint" style="padding:14px;text-align:center">ยังไม่มีเนื้อหา กดปุ่มด้านบนเพื่อเพิ่ม</div>')+a.map(function(b,i){if(only!=null&&i!=only)return '';var x='<div class="it bt'+(b===lastNew?' fresh':'')+'"><div class="row"><b style="flex:1">'+ic[b.k]+' '+nm[b.k]+' <span class="hint">ลำดับที่ '+(i+1)+'</span></b><button class="b s m" onclick="bmv('+n+','+i+',-1)">↑</button><button class="b s m" onclick="bmv('+n+','+i+',1)">↓</button><button class="b d m" onclick="if(confirm(\'ลบส่วนนี้?\'))bmv('+n+','+i+',0)">ลบ</button></div>';
+  if(b.k=='h')x+=F('พิมพ์หัวข้อ',b,'v');if(b.k=='p')x+=T('พิมพ์ข้อความ',b,'v',4);
+  if(b.k=='i')x+=IM('รูป',b,'v',900,1)+SZ(b)+SEL('ตำแหน่ง (เมื่อรูปเล็กกว่าเต็ม)',b,'al',[['l','ชิดซ้าย'],['c','กลาง'],['r','ชิดขวา']]);
+  if(b.k=='v')x+=F('วางลิงก์ YouTube หรือไฟล์ .mp4/.webm',b,'v')+SZ(b);
+  if(b.k=='l')x+=F('ข้อความบนปุ่ม',b,'v')+LK(b);return x+STY(b,only!=null)+'</div>'}).join('')}
+function ab(n,k,pos){var d={h:'หัวข้อใหม่',p:'พิมพ์ข้อความที่นี่',l:'ปุ่มใหม่'},o={k:k,v:d[k]||'',u:'#',w:'',al:'c'},a=REG[n],np=pos==null?a.length:+pos;a.splice(np,0,o);lastNew=o;if(SH&&SH.k=='blk'){SH.add=0;SH.i=np}rb();var el=document.querySelector('.fresh');if(el)el.scrollIntoView({block:'center',behavior:'smooth'})}
+function bmv(n,i,d){var a=REG[n];if(!d){a.splice(i,1);if(SH&&SH.k=='blk'){closeSheet();return}rb();return}var j=i+d;if(j<0||j>=a.length)return;var x=a[i];a[i]=a[j];a[j]=x;if(SH&&SH.k=='blk')SH.i=j;rb()}
+/* ช่องแก้ไข (แผงด้านล่าง) */
+var TTL={gen:'ชื่อ / โลโก้ / สี / รูปปก',home:'การ์ด',links:'ลิงก์ด่วน',news:'ข่าว',execs:'ผู้บริหาร',acts:'กิจกรรม',ft:'ท้ายเว็บ',menu:'เมนู',pgs:'หน้าย่อย'};
+function sheetRender(){var b=$('shb');if(!SH)return;
+ if(SH.k=='blk'){REG=[];b.innerHTML=BLK(SH.a,SH.add?-1:SH.i);bindUI(b);$('sht').textContent=SH.add?'เพิ่มส่วนใหม่':'แก้ส่วนนี้'}
+ else{var ot=tab;tab=SH.t;BDT=b;_rb();BDT=null;tab=ot;$('sht').textContent='แก้: '+TTL[SH.t]}}
+function openSheet(spec,el){SH={k:spec.k,a:spec.a,i:spec.i,t:spec.t,add:spec.add};$('sheet').classList.add('on');document.body.classList.add('sh');sheetRender();if(SH.t=='pgs')live();if(el){try{el.style.scrollMarginTop='90px';el.scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}}}
+function closeSheet(nl){SH=null;$('sheet').classList.remove('on');document.body.classList.remove('sh');if(!nl)live()}
+function live(){var y=scrollY,pg=$('pg'),op=pg.classList.contains('on'),st;
+ if(SH&&SH.t=='pgs'){if(S.pages[curPg]){curId=S.pages[curPg].id;st=op?pg.scrollTop:0;go('page:'+curId);pg.scrollTop=st}else closePg()}
+ else if(op){st=pg.scrollTop;go('page:'+curId);pg.scrollTop=st}
+ paint();scrollTo(0,y)}
+function setEM(on){EM=!!on;document.body.classList.toggle('em',EM);closeSheet(1);$('ad').classList.remove('on');$('fe').classList.add('on');$('fet').innerHTML=EM?'✓ เสร็จการแก้ไข':'✏️ แก้บนหน้า';$('pge').style.display=me&&EM?'':'none';live();if(EM)toast('แตะส่วนที่ต้องการแก้บนหน้าได้เลย')}
+function editCur(){var i=S.pages.findIndex(function(p){return p.id==curId});if(i>=0)curPg=i;if(SH){SH.t='pgs';rb()}else openSheet({k:'tab',t:'pgs'})}
+function editPg(n){var id=String(REG[n].u).slice(5),i=S.pages.findIndex(function(p){return p.id==id});if(i<0)return toast('ไม่พบหน้านี้');curPg=i;curId=id;if(SH){SH.t='pgs';rb();return}tab='pgs';tabs();rb();$('bd').scrollTop=0}
+function mkpg(n){var o=REG[n],id='p'+Date.now().toString(36);S.pages.push({id:id,t:o.t||'หน้าใหม่',blocks:[{k:'h',v:o.t||'หน้าใหม่'},{k:'p',v:'เขียนเนื้อหาที่นี่'}]});o.u='page:'+id;curPg=S.pages.length-1;curId=id;if(SH){SH.t='pgs';rb();toast('สร้างหน้าแล้ว พิมพ์เนื้อหาได้เลย');return}tab='pgs';tabs();rb();$('bd').scrollTop=0;toast('สร้างหน้าแล้ว พิมพ์เนื้อหาได้เลย')}
+var _rb=rb;rb=function(){if(SH){sheetRender();live()}else _rb()};
+function lv(){clearTimeout(LT);LT=setTimeout(live,300)}
+$('shb').addEventListener('input',lv);$('shb').addEventListener('change',lv);
+document.addEventListener('click',function(e){if(!EM)return;var t=e.target;if(t.closest('#sheet,#ad,#fe,#lg,#ts,#mb,#dr,#pg .ph'))return;var d=t.closest('[data-ed]');if(d){e.preventDefault();e.stopPropagation();openSheet(EDR[+d.dataset.ed],d);return}if(t.closest('[data-go]')){e.preventDefault();e.stopPropagation()}},true);
+icoWalk(document.body);
 (async function(){await load();norm();paint();splash()})();
 </script></body></html>
